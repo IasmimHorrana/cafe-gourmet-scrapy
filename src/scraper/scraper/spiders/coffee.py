@@ -1,5 +1,5 @@
 import scrapy
-
+import re
 
 class CoffeeSpider(scrapy.Spider):
     name = "coffee"
@@ -13,16 +13,40 @@ class CoffeeSpider(scrapy.Spider):
 
         for product in products:
             prices = product.css('span.andes-money-amount__fraction::text').getall()
+            promotion_label = product.css('span.andes-money-amount__discount::text').get()
+            reviews_rating_number = product.css('span.poly-reviews__rating::text').get()
+
+            # Extrai apenas o número da promoção, se existir
+            promotion_value = None
+            if promotion_label:
+                match = re.search(r'(\d+)', promotion_label)
+                if match:
+                    promotion_value = int(match.group(1))
+
+            # Limpa os parênteses do reviews_amount
+            reviews_amount = product.css('span.poly-reviews__total::text').get()
+            if reviews_amount:
+                reviews_amount = int(reviews_amount.replace("(", "").replace(")", ""))
+            else:
+                reviews_amount = None
+
+            if reviews_rating_number:
+                # Primeiro troca vírgula por ponto, caso o site use vírgula
+                reviews_rating_number = reviews_rating_number.replace(",", ".")
+                try:
+                    reviews_rating_number = float(reviews_rating_number)
+                except ValueError:
+                    reviews_rating_number = None
 
             yield {
                 'name': product.css('a.poly-component__title::text').get(),
                 'old_price': prices[0] if len(prices) > 0 else None,
                 'new_price': prices[1] if len(prices) > 1 else None,
-                'promotion': product.css('span.andes-money-amount__discount::text').get(),
-                'reviews_amount': product.css('span.poly-reviews__total::text').get(),
-                'reviews_rating_number': product.css('span.poly-reviews__rating::text').get()
+                'promotion_label': promotion_label,
+                'promotion_value': promotion_value,
+                'reviews_amount': reviews_amount,
+                'reviews_rating_number': reviews_rating_number
             }
-
 
         current_page = int(response.meta.get("page", 1))
         
