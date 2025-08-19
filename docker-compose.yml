@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_cafe
+    restart: always
+    environment:
+      POSTGRES_USER: cafe_user
+      POSTGRES_PASSWORD: cafe_pass
+      POSTGRES_DB: cafe_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata_cafe:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin_cafe
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: scraper_admin@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: P@ssw0rd
+    ports:
+      - "8081:80"
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmindata_cafe:/var/lib/pgadmin
+
+volumes:
+  pgdata_cafe:
+  pgadmindata_cafe:
