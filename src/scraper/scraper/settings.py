@@ -85,3 +85,37 @@ DOWNLOAD_DELAY = 1
 
 # Set settings whose default value is deprecated to a future-proof value
 FEED_EXPORT_ENCODING = "utf-8"
+
+# Ativa o pipeline que insere no Postgres
+# Diz pro Scrapy usar sua classe PostgresPipeline para processar cada item.
+ITEM_PIPELINES = {
+    'scraper.pipelines.PostgresPipeline': 300,
+}
+
+# Configurações de conexão com o Postgres
+POSTGRES_HOST = "postgres"   # nome do serviço no docker-compose
+POSTGRES_DB = "cafe_db"
+POSTGRES_USER = "cafe_user"
+POSTGRES_PASSWORD = "cafe_pass"
+POSTGRES_PORT = 5432
+
+"""
+FEEDS = {
+    'data.csv': {
+        'format': 'csv',
+        'encoding': 'utf-8',
+        'fields': [
+            'name',
+            'old_price',
+            'new_price',
+            'promotion_label',
+            'promotion_value',
+            'reviews_amount',
+            'reviews_rating_number'
+        ],
+        'overwrite': True
+    }
+}
+"""
+
+
