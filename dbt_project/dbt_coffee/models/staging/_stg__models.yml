@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: stg_products
+    description: "Modelo staging para a tabela de produtos de cafés."
+    columns:
+      - name: id
+        description: "ID único do produto"
+        tests:
+          - unique
+          - not_null
+
+      - name: name
+        description: "Nome do produto"
+        tests:
+          - not_null
+
+      - name: old_price
+        description: "Preço original do produto"
+
+      - name: new_price
+        description: "Novo preço do produto"
+
+      - name: promotion_label
+        description: "Rótulo da promoção do produto"
+
+      - name: promotion_value
+        description: "Valor da promoção do produto"
+
+      - name: reviews_amount
+        description: "Quantidade de avaliações que um produto tem no total."
+
+      - name: reviews_rating_number
+        description: "Representa a nota média atribuída pelos usuários."
+
