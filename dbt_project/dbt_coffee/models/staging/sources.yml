@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: raw          
+    schema: raw        
+    database: cafe_db
+    tables:
+      - name: coffee_products
