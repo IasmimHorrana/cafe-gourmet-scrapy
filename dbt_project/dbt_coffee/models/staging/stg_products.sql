@@ -13,8 +13,8 @@ transform as (
         new_price,
         promotion_label,
         promotion_value,
-        reviews_amount,
-        reviews_rating_number,
+        coalesce(reviews_amount, 0) as reviews_amount, -- NULL vira 0
+        reviews_rating_number,                          -- mantém NULL se não houver avaliações
 
         -- Metadados
         current_timestamp as etl_inserted_at

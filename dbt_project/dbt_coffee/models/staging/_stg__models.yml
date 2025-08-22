@@ -29,7 +29,10 @@ models:
 
       - name: reviews_amount
         description: "Quantidade de avaliações que um produto tem no total."
+        tests:
+          - not_null
 
       - name: reviews_rating_number
         description: "Representa a nota média atribuída pelos usuários."
+        
 
