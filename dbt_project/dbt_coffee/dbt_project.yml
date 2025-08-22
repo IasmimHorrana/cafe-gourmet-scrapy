@@ -1,7 +1,7 @@
 name: 'dbt_coffee'
 version: '1.0.0'
 
-profile: 'dbt_coffee'  # Ensure this matches the profile name in ~/.dbt/profiles.yml and is configured for postgres
+profile: 'dbt_coffee'  
 
 model-paths: ["models"]
 analysis-paths: ["analyses"]
@@ -12,8 +12,8 @@ snapshot-paths: ["snapshots"]
 
 vars:
     "dbt_date:time_zone": "America/Sao_Paulo"
-    source_schema: "raw"  # Add this if your sources use 'raw' schema
-    source_database: "cafe_db"  # Add this if your sources use 'cafe_db' database
+    source_schema: "raw"  
+    source_database: "cafe_db"  
 
 clean-targets:
   - "target"
