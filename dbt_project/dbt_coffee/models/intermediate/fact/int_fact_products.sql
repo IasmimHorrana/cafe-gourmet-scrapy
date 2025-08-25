@@ -41,6 +41,14 @@ select
     p.reviews_amount,
     p.reviews_rating_number,
 
+    -- Métricas derivadas
+    coalesce(p.new_price, p.old_price) as final_price,
+    
+    case
+        when p.new_price is not null and p.new_price < p.old_price then true
+        else false
+    end as is_on_promotion,
+
     -- Metadados
     current_timestamp as dbt_updated_at,
     '{{ run_started_at }}' as dbt_loaded_at
